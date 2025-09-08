@@ -1,3 +1,6 @@
 run = "python main.py"
 language = "python3"
 entrypoint = "main.py"
+
+[nix]
+channel = "stable-22_11"
