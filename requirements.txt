@@ -1,6 +1,1 @@
-# 최소 버전 - AI 포스트 생성 기능만
-
 streamlit
-google-generativeai
-pandas
-requests
