@@ -14,11 +14,11 @@ def run_app():
         
         print("🚀 네이버 블로그 자동 작성기 시작...")
         
-        # Streamlit 앱 실행 (안전한 버전 우선)
+        # Streamlit 앱 실행 (완전 자동화 버전)
         try:
             subprocess.run([
                 sys.executable, "-m", "streamlit", "run", 
-                "web_blog_writer_simple.py",
+                "web_blog_writer_full.py",
                 "--server.port=8080",
                 "--server.address=0.0.0.0",
                 "--server.headless=true"

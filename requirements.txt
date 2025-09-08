@@ -1,5 +1,7 @@
-# Replit 안정 버전 - 필수 패키지만
+# Replit 완전 자동화 버전 - 안정된 버전
 streamlit==1.28.1
 google-generativeai==0.3.2
 pandas==1.5.3
 requests==2.28.2
+selenium==4.15.0
+webdriver-manager==4.0.1
