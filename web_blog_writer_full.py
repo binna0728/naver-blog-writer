@@ -41,11 +41,11 @@ class FullBlogWriter:
             st.session_state.is_running = False
 
     def setup_driver(self):
-        """Replit용 Chrome 드라이버 설정"""
+        """Replit용 Chrome 드라이버 설정 - 유연한 방식"""
         try:
             options = Options()
             
-            # Replit 환경 최적화 설정
+            # Replit/Linux 환경 최적화 설정
             options.add_argument("--headless")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
@@ -54,18 +54,38 @@ class FullBlogWriter:
             options.add_argument("--disable-extensions")
             options.add_argument("--disable-plugins")
             options.add_argument("--disable-images")
+            options.add_argument("--remote-debugging-port=9222")
             options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36")
             
-            # Chrome 바이너리 경로 (Replit 환경)
-            options.binary_location = "/nix/store/4jk6b9z2ka2dz0p6w4y4k8cfjw80z3l5-chromium-120.0.6099.109/bin/chromium"
+            # Chrome 바이너리 경로 시도 (여러 경로)
+            chrome_paths = [
+                "/usr/bin/google-chrome-stable",
+                "/usr/bin/google-chrome", 
+                "/usr/bin/chromium-browser",
+                "/usr/bin/chromium",
+                "/snap/bin/chromium"
+            ]
+            
+            for chrome_path in chrome_paths:
+                if os.path.exists(chrome_path):
+                    options.binary_location = chrome_path
+                    break
             
             try:
                 # ChromeDriverManager 사용
                 service = Service(ChromeDriverManager().install())
                 self.driver = webdriver.Chrome(service=service, options=options)
-            except Exception:
-                # 대안: 시스템 크롬 드라이버
-                self.driver = webdriver.Chrome(options=options)
+                st.success("✅ Chrome 드라이버 설정 성공!")
+            except Exception as e1:
+                try:
+                    # 시스템 chromedriver 사용
+                    self.driver = webdriver.Chrome(options=options)
+                    st.success("✅ 시스템 Chrome 드라이버 사용 성공!")
+                except Exception as e2:
+                    st.error(f"Chrome 드라이버 설정 실패: {str(e1)}, {str(e2)}")
+                    st.info("💡 Replit Shell에서 다음 명령어를 실행해보세요:")
+                    st.code("bash setup.sh", language="bash")
+                    return False
             
             return True
         except Exception as e:

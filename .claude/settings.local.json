@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir dist)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(C:UsersBINNAAppDataLocalMicrosoftWindowsAppspython.exe -m pip install selenium webdriver-manager schedule cryptography)",
+      "Bash(pip uninstall:*)",
+      "Bash(powershell:*)",
+      "Bash(move chromedriver-win64chromedriver.exe chromedriver.exe)",
+      "Bash(del chromedriver.exe)",
+      "Bash(C:/Users/BINNA/.conda/envs/project/python.exe -m pip install google-generativeai)",
+      "Bash(C:/Users/BINNA/.conda/envs/project/python.exe -c \"import google.generativeai as genai; print(''Google Generative AI 모듈 로드 성공'')\")",
+      "Bash(C:/Users/BINNA/.conda/envs/project/python.exe -m pip install selenium webdriver-manager)",
+      "Bash(C:/Users/BINNA/.conda/envs/project/python.exe -m pip install pyperclip openpyxl)",
+      "Bash(pyinstaller:*)",
+      "Bash(.build_final.bat)",
+      "Bash(set CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1)",
+      "Bash(dir)",
+      "Bash(.dist네이버블로그자동작성기.exe)",
+      "Bash(.dist네이버블로그자동작성기_테스트.exe)",
+      "Bash(streamlit run:*)",
+      "Bash(git init:*)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(move README.md README_old.md)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
