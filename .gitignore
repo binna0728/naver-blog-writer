@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# 개인정보 파일
+blog_credentials.json
+*.xlsx
+*.csv
+
+# 빌드 파일
+build/
+dist/
+*.spec
+
+# IDE
+.vscode/
+.idea/
+
+# 로그 파일
+*.log
+
+# 임시 파일
+*.tmp
+*.bak
