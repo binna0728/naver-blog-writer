@@ -28,7 +28,8 @@
       "Bash(git branch:*)",
       "Bash(git push:*)",
       "Bash(git pull:*)",
-      "Bash(move README.md README_old.md)"
+      "Bash(move README.md README_old.md)",
+      "Bash(pip --version)"
     ],
     "deny": [],
     "ask": []
