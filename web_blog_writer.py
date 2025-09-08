@@ -42,23 +42,44 @@ class WebBlogWriter:
             st.session_state.is_running = False
 
     def setup_driver(self):
-        """Chrome 드라이버 설정"""
+        """Chrome 드라이버 설정 - 클라우드 환경 최적화"""
         try:
             options = Options()
+            
+            # 클라우드 환경 필수 설정
+            options.add_argument("--headless=new")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
             options.add_argument("--disable-gpu")
+            options.add_argument("--disable-web-security")
+            options.add_argument("--disable-features=VizDisplayCompositor")
             options.add_argument("--window-size=1920,1080")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-plugins")
+            options.add_argument("--disable-images")
+            options.add_argument("--disable-javascript")
+            options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36")
             
-            # 모바일에서는 헤드리스 모드 사용
-            if st.checkbox("헤드리스 모드 (백그라운드 실행)", value=True):
-                options.add_argument("--headless")
+            # Streamlit Cloud 특화 설정
+            options.binary_location = "/usr/bin/chromium"
             
-            service = Service(ChromeDriverManager().install())
-            self.driver = webdriver.Chrome(service=service, options=options)
+            try:
+                # Chrome 드라이버 설치 시도
+                service = Service(ChromeDriverManager().install())
+                self.driver = webdriver.Chrome(service=service, options=options)
+            except Exception:
+                # 대안: 시스템 크롬 드라이버 사용
+                try:
+                    service = Service("/usr/bin/chromedriver")
+                    self.driver = webdriver.Chrome(service=service, options=options)
+                except Exception:
+                    # 최후 수단: 기본 설정으로 시도
+                    self.driver = webdriver.Chrome(options=options)
+            
             return True
         except Exception as e:
             st.error(f"드라이버 설정 실패: {str(e)}")
+            st.error("Streamlit Cloud 환경에서는 웹 자동화 기능이 제한될 수 있습니다.")
             return False
 
     def test_login(self, naver_id, naver_pw):
@@ -252,6 +273,11 @@ def main():
     """, unsafe_allow_html=True)
     
     st.title("🚀 네이버 블로그 자동 작성기")
+    
+    # 클라우드 환경 알림
+    st.info("📱 **모바일 최적화 웹 버전** - 클라우드 환경에서 실행 중입니다")
+    st.warning("⚠️ **주의**: Streamlit Cloud 환경에서는 웹 자동화(Selenium) 기능이 제한될 수 있습니다. 포스트 생성은 정상 작동합니다.")
+    
     st.markdown("---")
     
     writer = WebBlogWriter()
